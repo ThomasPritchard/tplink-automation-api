@@ -18,12 +18,12 @@ export class TriggerDevicesController {
     const weatherData = await this.openMeteoGateway.getWeatherData();
     const toggleStatus = Number(weatherData.temperature <= 10 && weatherData.isDay);
 
-    console.log({
-      toggleStatus,
-      temperature: weatherData.temperature,
-      isDay: weatherData.isDay,
-      heaterDevices
-    });
+    // console.log({
+    //   toggleStatus,
+    //   temperature: weatherData.temperature,
+    //   isDay: weatherData.isDay,
+    //   heaterDevices
+    // });
 
     await Promise.all(heaterDevices.map(async (device: Device) => {
       await this.tpLinkGateway.toggleDevice(device.id, toggleStatus);
