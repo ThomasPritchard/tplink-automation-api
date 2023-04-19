@@ -15,12 +15,13 @@ export class TriggerDevicesController {
     const deviceList = await this.tpLinkGateway.listDevices();
     const heaterDevices = deviceList.filter((device: Device) => device.alias.toLowerCase().includes('heater'));
 
-    const temperature = await this.openMeteoGateway.getCurrentTemperature();
-    const toggleStatus = Number(temperature <= 10);
+    const weatherData = await this.openMeteoGateway.getWeatherData();
+    const toggleStatus = Number(weatherData.temperature <= 10 && weatherData.isDay);
 
     console.log({
       toggleStatus,
-      temperature,
+      temperature: weatherData.temperature,
+      isDay: weatherData.isDay,
       heaterDevices
     });
 

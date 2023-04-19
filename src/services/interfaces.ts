@@ -3,3 +3,8 @@ export interface Device {
   alias: string;
   status: number;
 }
+
+export interface WeatherData {
+  temperature: number;
+  isDay: number;
+}
