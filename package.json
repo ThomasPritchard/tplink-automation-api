@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/node": "18.15.11",
     "nodemon": "2.0.22",
+    "rimraf": "5.0.0",
     "typescript": "5.0.3"
   },
   "dependencies": {
