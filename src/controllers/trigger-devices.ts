@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { TplinkGateway } from '../services/tplink-gateway.js';
 import { OpenMeteoGateway } from '../services/open-meteo-gateway.js';
 import { Device } from '../services/interfaces.js';
@@ -12,7 +11,7 @@ export class TriggerDevicesController {
     this.openMeteoGateway = openMeteoGateway;
   }
 
-  public post = async (req: Request, res: Response) => {
+  public post = async () => {
     const deviceList = await this.tpLinkGateway.listDevices();
     const heaterDevices = deviceList.filter((device: Device) => device.alias.toLowerCase().includes('heater'));
 
@@ -25,10 +24,10 @@ export class TriggerDevicesController {
       heaterDevices
     });
 
-    Promise.all(heaterDevices.map(async (device: Device) => {
+    await Promise.all(heaterDevices.map(async (device: Device) => {
       await this.tpLinkGateway.toggleDevice(device.id, toggleStatus);
     }));
-    return res.status(200).send();
+    return;
   }
 }
 
