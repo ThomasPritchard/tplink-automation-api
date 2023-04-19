@@ -8,7 +8,7 @@
     "build": "npx tsc",
     "start": "npm run build && node .",
     "dev": "nodemon -e ts --exec \"npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": ""
   },
   "keywords": [],
   "author": "",
