@@ -2,6 +2,7 @@ import axios from 'axios';
 import { uuid } from 'uuidv4';
 import { config } from '../config/environment-variables.js';
 import { Device } from './interfaces.js';
+import logger from './logger.js';
 
 const getToken = async (): Promise<string> => {
   const authResponse = await axios.post(config.tpLink.baseUrl, {
@@ -32,17 +33,25 @@ export class TplinkGateway {
   }
 
   public listDevices = async (): Promise<Device[]> => {
-    const response = await axios.post(config.tpLink.baseUrl, {
-      method: "getDeviceList",
-      params: {
-        token: this.token,
-      }
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    let response;
+    try {
+      logger.info("tpLinkGateway::listDevices: Attempting to grab device list from service", { baseUrl: config.tpLink.baseUrl });
+      response = await axios.post(config.tpLink.baseUrl, {
+        method: "getDeviceList",
+        params: {
+          token: this.token,
+        }
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      logger.verbose("tpLinkGateway::listDevices: Fetched response", { response: response.data });
+    } catch(error) {
+      logger.error("tpLinkGateway::listDevices: Failed to grab device list from service", { error });
+      throw error;
+    }
 
     const deviceList: any[] = response.data.result.deviceList;
     const mappedDeviceList: Device[] = deviceList.map((device) => ({

@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 
-dotenv.config();
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config();
+}
 
 interface Config {
   baseUrl: string;

@@ -1,8 +1,11 @@
 import { AzureFunction, Context } from "@azure/functions"
 import triggerDevicesController from "../src/controllers/trigger-devices.js";
+import logger from "../src/services/logger.js";
 
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: any): Promise<void> {
     var timeStamp = new Date().toISOString();
+
+    logger.verbose("WeatherCheck::timerTrigger: Timer trigger has started");
 
     if (myTimer.isPastDue)
     {
@@ -10,10 +13,6 @@ const timerTrigger: AzureFunction = async function (context: Context, myTimer: a
     }
 
     await triggerDevicesController.post();
-
-    context.res = {
-      status: 200,
-    }
 
     context.log('Timer trigger function ran!', timeStamp);
 };
