@@ -47,9 +47,11 @@ export class TplinkGateway {
           'Content-Type': 'application/json'
         }
       });
-      logger.info("tpLinkGateway::listDevices: Fetched response");
+      logger.info("tpLinkGateway::listDevices: Fetched response", {
+        response: response.data,
+      });
     } catch(error) {
-      logger.error("tpLinkGateway::listDevices: Failed to grab device list from service");
+      logger.error(error, "tpLinkGateway::listDevices: Failed to grab device list from service");
       throw error;
     }
 
