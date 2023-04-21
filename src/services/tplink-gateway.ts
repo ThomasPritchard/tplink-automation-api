@@ -35,7 +35,7 @@ export class TplinkGateway {
   public listDevices = async (): Promise<Device[]> => {
     let response;
     try {
-      logger.info("tpLinkGateway::listDevices: Attempting to grab device list from service", { baseUrl: config.tpLink.baseUrl });
+      logger.info("tpLinkGateway::listDevices: Attempting to grab device list from service");
       response = await axios.post(config.tpLink.baseUrl, {
         method: "getDeviceList",
         params: {
@@ -47,9 +47,9 @@ export class TplinkGateway {
           'Content-Type': 'application/json'
         }
       });
-      logger.verbose("tpLinkGateway::listDevices: Fetched response", { response: response.data });
+      logger.info("tpLinkGateway::listDevices: Fetched response");
     } catch(error) {
-      logger.error("tpLinkGateway::listDevices: Failed to grab device list from service", { error });
+      logger.error("tpLinkGateway::listDevices: Failed to grab device list from service");
       throw error;
     }
 
